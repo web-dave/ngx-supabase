@@ -3,7 +3,71 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-subapase": {
+    "ngx-supabase": {
+      "projectType": "library",
+      "root": "projects/ngx-supabase",
+      "sourceRoot": "projects/ngx-supabase/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-supabase/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-supabase/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-supabase/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-supabase/src/test.ts",
+            "tsConfig": "projects/ngx-supabase/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-supabase/karma.conf.js"
+          }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "ngx-supabase:serve",
+            "configFile": "projects/ngx-supabase/cypress.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngx-supabase:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false,
+            "configFile": "projects/ngx-supabase/cypress.json"
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "ngx-supabase:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngx-supabase:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "ngx-supabase-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -13,25 +77,25 @@
           "strict": true
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "projects/ngx-supabase-demo",
+      "sourceRoot": "projects/ngx-supabase-demo/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-subapase",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/ngx-supabase-demo",
+            "index": "projects/ngx-supabase-demo/src/index.html",
+            "main": "projects/ngx-supabase-demo/src/main.ts",
+            "polyfills": "projects/ngx-supabase-demo/src/polyfills.ts",
+            "tsConfig": "projects/ngx-supabase-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/ngx-supabase-demo/src/favicon.ico",
+              "projects/ngx-supabase-demo/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/ngx-supabase-demo/src/styles.scss"
             ],
             "scripts": []
           },
@@ -51,8 +115,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "projects/ngx-supabase-demo/src/environments/environment.ts",
+                  "with": "projects/ngx-supabase-demo/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -72,10 +136,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ngx-subapase:build:production"
+              "browserTarget": "ngx-supabase-demo:build:production"
             },
             "development": {
-              "browserTarget": "ngx-subapase:build:development"
+              "browserTarget": "ngx-supabase-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,29 +147,62 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-subapase:build"
+            "browserTarget": "ngx-supabase-demo:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "main": "projects/ngx-supabase-demo/src/test.ts",
+            "polyfills": "projects/ngx-supabase-demo/src/polyfills.ts",
+            "tsConfig": "projects/ngx-supabase-demo/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-supabase-demo/karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/ngx-supabase-demo/src/favicon.ico",
+              "projects/ngx-supabase-demo/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/ngx-supabase-demo/src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "ngx-supabase-demo:serve",
+            "configFile": "projects/ngx-supabase-demo/cypress.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngx-supabase-demo:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false,
+            "configFile": "projects/ngx-supabase-demo/cypress.json"
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "ngx-supabase-demo:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngx-supabase-demo:serve:production"
+            }
           }
         }
       }
     }
   },
-  "defaultProject": "ngx-subapase"
+  "defaultProject": "ngx-supapase-demo"
 }

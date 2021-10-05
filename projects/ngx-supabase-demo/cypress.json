@@ -1,0 +1,9 @@
+{
+  "integrationFolder": "projects/ngx-supabase-demo/cypress/integration",
+  "supportFile": "projects/ngx-supabase-demo/cypress/support/index.ts",
+  "videosFolder": "projects/ngx-supabase-demo/cypress/videos",
+  "screenshotsFolder": "projects/ngx-supabase-demo/cypress/screenshots",
+  "pluginsFile": "projects/ngx-supabase-demo/cypress/plugins/index.ts",
+  "fixturesFolder": "projects/ngx-supabase-demo/cypress/fixtures",
+  "baseUrl": "http://localhost:4200"
+}

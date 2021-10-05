@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'ngx-subapase'`, () => {
+  it(`should have as title 'ngx-supabase-demo'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ngx-subapase');
+    expect(app.title).toEqual('ngx-supabase-demo');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('ngx-subapase app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('ngx-supabase-demo app is running!');
   });
 });
