@@ -1,24 +1,74 @@
 # NgxSupabase
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
+Angular Module to use supabase with angular.
 
-## Code scaffolding
+## get started
 
-Run `ng generate component component-name --project ngx-supabase` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-supabase`.
-> Note: Don't forget to add `--project ngx-supabase` or else it will be added to the default project in your `angular.json` file. 
+### install it
 
-## Build
+```bash
+npm i ngx-supabase
+```
 
-Run `ng build ngx-supabase` to build the project. The build artifacts will be stored in the `dist/` directory.
+### add it to your module
 
-## Publishing
+you need a `env.ts` file with your supabase creds
 
-After building your library with `ng build ngx-supabase`, go to the dist folder `cd dist/ngx-supabase` and run `npm publish`.
+```ts
+import { NgxSupabaseConfig } from "ngx-supabase";
 
-## Running unit tests
+export const config: NgxSupabaseConfig = {
+  supabaseUrl: "",
+  supabaseKey: "",
+};
+```
 
-Run `ng test ngx-supabase` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```ts
+import { NgxSupabaseModule } from 'ngx-supabase';
+import { config } from '../env';
 
-## Further help
+@NgModule({
+  imports: [
+    ...,
+    NgxSupabaseModule.forRoot(config),
+  ],
+})
+export class YourModule {}
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+
+and you are ready to go.
+
+### API
+
+#### SIGNUP
+
+```ts
+signUp(value: UserCredentials): Observable<{
+    user: User | null;
+    session: Session | null;
+    error: Error | null;
+    data: User | Session | null;
+  }>
+```
+
+#### GET DATA FROM TABLE
+
+```ts
+selectFrom(
+    tbl: string,
+    columns?: string | undefined,
+    options?:
+      | {
+          head?: boolean | undefined;
+          count?: 'exact' | 'planned' | 'estimated' | null | undefined;
+        }
+      | undefined
+  ): Observable<PostgrestResponse<{ [key: string]: any }>>
+```
+
+#### GET COLLUM NAMES FROM TABLE
+
+```ts
+getCollumsFrom(tbl: string): Observable<string[]>
+```

@@ -41,7 +41,7 @@ export class NgxSupabaseService {
     );
   }
 
-  getCollumsFrom(tbl: string) {
+  getCollumsFrom(tbl: string): Observable<string[]> {
     return from(this.client.from<{ [key: string]: any }>(tbl)).pipe(
       map((data) => Object.keys(data.body?.[0] || {}))
     );
