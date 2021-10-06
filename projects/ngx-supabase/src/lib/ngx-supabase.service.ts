@@ -9,7 +9,7 @@ import {
   UserCredentials,
 } from '@supabase/supabase-js';
 import { from, Observable } from 'rxjs';
-import { SupabaseConfig } from './supabase.config';
+import { NgxSupabaseConfig } from './ngx-supabase.config';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +38,7 @@ export class NgxSupabaseService {
     return from(this.client.from(tbl).select(columns, options));
   }
 
-  constructor(private config: SupabaseConfig) {
+  constructor(private config: NgxSupabaseConfig) {
     console.log(config);
     this.client = createClient(
       config.supabaseUrl,

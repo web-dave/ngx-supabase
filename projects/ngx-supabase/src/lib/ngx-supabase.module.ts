@@ -1,5 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { SupabaseConfig } from './supabase.config';
+import { NgxSupabaseConfig } from './ngx-supabase.config';
 
 @NgModule({
   declarations: [],
@@ -7,11 +7,11 @@ import { SupabaseConfig } from './supabase.config';
 })
 export class NgxSupabaseModule {
   static forRoot(
-    config: SupabaseConfig
+    config: NgxSupabaseConfig
   ): ModuleWithProviders<NgxSupabaseModule> {
     return {
       ngModule: NgxSupabaseModule,
-      providers: [{ provide: SupabaseConfig, useValue: config }],
+      providers: [{ provide: NgxSupabaseConfig, useValue: config }],
     };
   }
 }
