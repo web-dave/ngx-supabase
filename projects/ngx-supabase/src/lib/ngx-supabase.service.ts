@@ -9,6 +9,7 @@ import {
   UserCredentials,
 } from '@supabase/supabase-js';
 import { from, Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { NgxSupabaseConfig } from './ngx-supabase.config';
 
 @Injectable({
@@ -34,12 +35,19 @@ export class NgxSupabaseService {
           count?: 'exact' | 'planned' | 'estimated' | null | undefined;
         }
       | undefined
-  ): Observable<PostgrestResponse<any>> {
-    return from(this.client.from(tbl).select(columns, options));
+  ): Observable<PostgrestResponse<{ [key: string]: any }>> {
+    return from(
+      this.client.from<{ [key: string]: any }>(tbl).select(columns, options)
+    );
+  }
+
+  getCollumsFrom(tbl: string) {
+    return from(this.client.from<{ [key: string]: any }>(tbl)).pipe(
+      map((data) => Object.keys(data.body?.[0] || {}))
+    );
   }
 
   constructor(private config: NgxSupabaseConfig) {
-    console.log(config);
     this.client = createClient(
       config.supabaseUrl,
       config.supabaseKey,
