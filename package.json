@@ -9,7 +9,8 @@
     "test": "ng test",
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "publish:lib": "cd dist/ngx-supabase && npm publish"
   },
   "private": true,
   "dependencies": {
