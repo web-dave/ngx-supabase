@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --project ngx-supabase --watch",
     "test": "ng test",
     "e2e": "ng e2e",
     "cypress:open": "cypress open",

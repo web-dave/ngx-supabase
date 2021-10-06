@@ -1,4 +1,4 @@
-<form style="max-width: 500px; margin: auto">
+<form [formGroup]="signUpForm" style="max-width: 500px; margin: auto">
   <h2>Register Form</h2>
   <div class="input-container">
     <i class="fa fa-user icon"></i>
@@ -6,13 +6,18 @@
       class="input-field"
       type="text"
       placeholder="Username"
-      name="usrnm"
+      formControlName="name"
     />
   </div>
 
   <div class="input-container">
     <i class="fa fa-envelope icon"></i>
-    <input class="input-field" type="text" placeholder="Email" name="email" />
+    <input
+      class="input-field"
+      type="text"
+      placeholder="Email"
+      formControlName="email"
+    />
   </div>
 
   <div class="input-container">
@@ -21,18 +26,23 @@
       class="input-field"
       type="password"
       placeholder="Password"
-      name="psw"
+      formControlName="password"
     />
   </div>
 
   <button type="submit" class="btn">Register</button>
 </form>
-<form style="max-width: 500px; margin: auto">
+<form [formGroup]="logInForm" style="max-width: 500px; margin: auto">
   <h2>Login Form</h2>
 
   <div class="input-container">
     <i class="fa fa-envelope icon"></i>
-    <input class="input-field" type="text" placeholder="Email" name="email" />
+    <input
+      class="input-field"
+      type="text"
+      placeholder="Email"
+      formControlName="email"
+    />
   </div>
 
   <div class="input-container">
@@ -41,7 +51,7 @@
       class="input-field"
       type="password"
       placeholder="Password"
-      name="psw"
+      formControlName="password"
     />
   </div>
 

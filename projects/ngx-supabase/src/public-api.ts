@@ -3,5 +3,4 @@
  */
 
 export * from './lib/ngx-supabase.service';
-export * from './lib/ngx-supabase.component';
 export * from './lib/ngx-supabase.module';

@@ -12,20 +12,14 @@
     "declaration": false,
     "downlevelIteration": true,
     "paths": {
-      "ngx-supabase": [
-        "dist/ngx-supabase/ngx-supabase",
-        "dist/ngx-supabase"
-      ]
+      "ngx-supabase": ["dist/ngx-supabase/ngx-supabase", "dist/ngx-supabase"]
     },
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "lib": ["es2018", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

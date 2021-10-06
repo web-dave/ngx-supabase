@@ -1,16 +1,17 @@
-import { NgModule } from '@angular/core';
-import { NgxSupabaseComponent } from './ngx-supabase.component';
-
-
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { SupabaseConfig } from './supabase.config';
 
 @NgModule({
-  declarations: [
-    NgxSupabaseComponent
-  ],
-  imports: [
-  ],
-  exports: [
-    NgxSupabaseComponent
-  ]
+  declarations: [],
+  imports: [],
 })
-export class NgxSupabaseModule { }
+export class NgxSupabaseModule {
+  static forRoot(
+    config: SupabaseConfig
+  ): ModuleWithProviders<NgxSupabaseModule> {
+    return {
+      ngModule: NgxSupabaseModule,
+      providers: [{ provide: SupabaseConfig, useValue: config }],
+    };
+  }
+}

@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# private config
+/projects/ngx-supabase-demo/src/env.ts
+
 # compiled output
 /dist
 /tmp
