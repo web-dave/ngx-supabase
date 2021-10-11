@@ -1,9 +1,10 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { NgxSupabaseConfig } from './ngx-supabase.config';
 
 @NgModule({
   declarations: [],
-  imports: [],
+  imports: [HttpClientModule],
 })
 export class NgxSupabaseModule {
   static forRoot(

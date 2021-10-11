@@ -1,15 +1,9 @@
-<form [formGroup]="signUpForm" style="max-width: 500px; margin: auto">
+<form
+  [formGroup]="signUpForm"
+  style="max-width: 500px; margin: auto"
+  (ngSubmit)="signUpUser()"
+>
   <h2>Register Form</h2>
-  <div class="input-container">
-    <i class="fa fa-user icon"></i>
-    <input
-      class="input-field"
-      type="text"
-      placeholder="Username"
-      formControlName="name"
-    />
-  </div>
-
   <div class="input-container">
     <i class="fa fa-envelope icon"></i>
     <input
@@ -32,7 +26,11 @@
 
   <button type="submit" class="btn">Register</button>
 </form>
-<form [formGroup]="logInForm" style="max-width: 500px; margin: auto">
+<form
+  [formGroup]="logInForm"
+  style="max-width: 500px; margin: auto"
+  (ngSubmit)="signInUser()"
+>
   <h2>Login Form</h2>
 
   <div class="input-container">
