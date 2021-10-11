@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
   signInUser() {
     this.supabase
-      .signInUser({ email: 'dave@webdave.de', password: 'HalloWelt' })
+      .signInUser(this.logInForm.value)
       .subscribe((data) => console.log('signin', data));
   }
 

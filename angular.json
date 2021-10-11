@@ -94,9 +94,7 @@
               "projects/ngx-supabase-demo/src/favicon.ico",
               "projects/ngx-supabase-demo/src/assets"
             ],
-            "styles": [
-              "projects/ngx-supabase-demo/src/styles.scss"
-            ],
+            "styles": ["projects/ngx-supabase-demo/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -162,9 +160,7 @@
               "projects/ngx-supabase-demo/src/favicon.ico",
               "projects/ngx-supabase-demo/src/assets"
             ],
-            "styles": [
-              "projects/ngx-supabase-demo/src/styles.scss"
-            ],
+            "styles": ["projects/ngx-supabase-demo/src/styles.scss"],
             "scripts": []
           }
         },
@@ -204,5 +200,5 @@
       }
     }
   },
-  "defaultProject": "ngx-supapase-demo"
+  "defaultProject": "ngx-supabase-demo"
 }

@@ -15,10 +15,11 @@ import {
   VerifyOTPParams,
 } from '@supabase/supabase-js';
 import { from, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { NgxSupabaseConfig } from './ngx-supabase.config';
 import {
   NgxAuthResponse,
+  NgxSignInResponse,
   NgxSupaBaseSuccessResponse,
   SelectFromParams,
 } from './ngx-supabase.types';
@@ -175,8 +176,15 @@ export class NgxSupabaseService {
   }
   signInUser(value: UserCredentials): Observable<NgxAuthResponse> {
     const url = this.authUrl + 'token?grant_type=password';
-    return this.http.post<NgxAuthResponse>(url, value, {
-      headers: this.headers,
-    });
+    return this.http
+      .post<NgxSignInResponse>(url, value, {
+        headers: this.headers,
+      })
+      .pipe(
+        map((res) => {
+          localStorage.setItem('access_token', res.access_token);
+          return res.user;
+        })
+      );
   }
 }

@@ -16,6 +16,13 @@ export interface NgxAuthResponse {
   created_at: string;
   updated_at: string;
 }
+export interface NgxSignInResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  refresh_token: string;
+  user: NgxAuthResponse;
+}
 
 export type SupabaseFilter =
   | 'eq'
