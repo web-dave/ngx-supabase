@@ -1,32 +1,28 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import {
   AuthChangeEvent,
   createClient,
-  PostgrestResponse,
   Provider,
   Session,
   Subscription,
   SupabaseClient,
   User,
-  UserAttributes,
   UserCredentials,
   VerifyOTPParams,
 } from '@supabase/supabase-js';
-import { from, Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { NgxSupabaseConfig } from './ngx-supabase.config';
+import { NgxSupabaseRestService } from './ngx-supabase.rest.service';
 import {
-  NgxAuthResponse,
-  NgxSignInResponse,
   NgxSupaBaseSuccessResponse,
   SelectFromParams,
 } from './ngx-supabase.types';
+import { NgxSupabaseUserService } from './ngx-supabase.user.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class NgxSupabaseService {
   client: SupabaseClient;
 
@@ -90,15 +86,6 @@ export class NgxSupabaseService {
     return from(this.client.auth.signOut());
   }
 
-  update(
-    attributes: UserAttributes
-  ): Observable<{ data: User | null; user: User | null; error: Error | null }> {
-    return from(this.client.auth.update(attributes));
-  }
-
-  user(): Observable<User | null> {
-    return of(this.client.auth.user());
-  }
   verifyOTP(
     params: VerifyOTPParams,
     options: {
@@ -113,40 +100,21 @@ export class NgxSupabaseService {
     return from(this.client.auth.verifyOTP(params, options));
   }
 
-  // from
-  select(
-    tbl: string,
-    params?: SelectFromParams
-  ): Observable<PostgrestResponse<{ [key: string]: any }>> {
-    // if (params?.filter) {
-    //   this.buildQuery();
-    // }
-    return from(
-      this.client
-        .from<{ [key: string]: any }>(tbl)
-        .select(params?.columns, params?.options)
-        .eq('name', 'TOPI')
-    );
-  }
-
-  headers: HttpHeaders;
   restUrl: string;
-  authUrl: string;
   // auth
-  constructor(private config: NgxSupabaseConfig, private http: HttpClient) {
+  constructor(
+    private config: NgxSupabaseConfig,
+    private http: HttpClient,
+    public user: NgxSupabaseUserService,
+    public rest: NgxSupabaseRestService
+  ) {
     this.client = createClient(
       config.supabaseUrl,
       config.supabaseKey,
       config.options
     );
 
-    this.headers = new HttpHeaders({
-      authority: config.supabaseUrl.replace('https://', ''),
-      apikey: config.supabaseKey,
-    });
-
     this.restUrl = `${this.config.supabaseUrl}rest/v1/`;
-    this.authUrl = `${this.config.supabaseUrl}auth/v1/`;
   }
 
   selectFrom(
@@ -158,33 +126,11 @@ export class NgxSupabaseService {
       tbl +
       '?' +
       (params?.columns ? 'select=' + params.columns : '');
-    return this.http.get<NgxSupaBaseSuccessResponse[]>(url, {
-      headers: this.headers,
-    });
+    return this.http.get<NgxSupaBaseSuccessResponse[]>(url);
   }
   getCollumsFrom(tbl: string): Observable<string[]> {
     return this.selectFrom(tbl).pipe(
       map((data) => (data[0] ? Object.keys(data[0] || {}) : []))
     );
-  }
-
-  signUpUser(value: UserCredentials): Observable<NgxAuthResponse> {
-    const url = this.authUrl + 'signup';
-    return this.http.post<NgxAuthResponse>(url, value, {
-      headers: this.headers,
-    });
-  }
-  signInUser(value: UserCredentials): Observable<NgxAuthResponse> {
-    const url = this.authUrl + 'token?grant_type=password';
-    return this.http
-      .post<NgxSignInResponse>(url, value, {
-        headers: this.headers,
-      })
-      .pipe(
-        map((res) => {
-          localStorage.setItem('access_token', res.access_token);
-          return res.user;
-        })
-      );
   }
 }

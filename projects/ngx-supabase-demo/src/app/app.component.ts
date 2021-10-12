@@ -18,21 +18,21 @@ export class AppComponent implements OnInit {
   });
 
   signUpUser() {
-    this.supabase
-      .signUpUser(this.signUpForm.value)
+    this.supabase.user
+      .signUp(this.signUpForm.value)
       .subscribe((data) => console.log('signup', data));
   }
 
   signInUser() {
-    this.supabase
-      .signInUser(this.logInForm.value)
+    this.supabase.user
+      .signIn(this.logInForm.value)
       .subscribe((data) => console.log('signin', data));
   }
 
   constructor(private supabase: NgxSupabaseService) {}
 
   ngOnInit() {
-    this.supabase
+    this.supabase.rest
       .selectFrom('locations', {
         columns: 'city,name',
         filter: {
@@ -46,19 +46,13 @@ export class AppComponent implements OnInit {
         (data) => console.log(data),
         (err) => console.table(err)
       );
-    this.supabase.getCollumsFrom('locations').subscribe(console.table);
+    this.supabase.rest.getCollumsFrom('locations').subscribe(console.table);
     // HalloWelt
     // sfsfsdgdgf
-    // this.supabase
-    //   .select('locations', {
-    //     columns: 'city,name',
-    //     filter: {
-    //       name: {
-    //         filter: 'eq',
-    //         value: 'TOPI',
-    //       },
-    //     },
+    // this.supabase.user
+    //   .update({
+    //     email: 'hurz@hurz.com',
     //   })
-    //   .subscribe((data) => console.log(data));
+    //   .subscribe(console.table);
   }
 }
