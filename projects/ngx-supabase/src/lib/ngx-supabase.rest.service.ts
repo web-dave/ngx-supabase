@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   NgxSupaBaseSuccessResponse,
+  SelectFromFilter,
   SelectFromParams,
 } from './ngx-supabase.types';
 import { Observable } from 'rxjs';
@@ -20,11 +21,13 @@ export class NgxSupabaseRestService {
     tbl: string,
     params?: SelectFromParams
   ): Observable<NgxSupaBaseSuccessResponse[]> {
-    const url =
-      this.restUrl +
-      tbl +
-      '?' +
-      (params?.columns ? 'select=' + params.columns : '');
+    let filtersString = this.buildFilterstring(params?.filter);
+    let selectString = this.buildSelectString(
+      params?.columns,
+      !!params?.filter
+    );
+    let queryString = !!params?.columns || !!params?.filter ? '?' : '';
+    const url = this.restUrl + tbl + queryString + filtersString + selectString;
     return this.http.get<NgxSupaBaseSuccessResponse[]>(url);
   }
 
@@ -32,5 +35,25 @@ export class NgxSupabaseRestService {
     return this.selectFrom(tbl).pipe(
       map((data) => (data[0] ? Object.keys(data[0] || {}) : []))
     );
+  }
+
+  insertInto() {}
+
+  private buildFilterstring(data: SelectFromFilter = {}): string {
+    let filtersString = '';
+    if (data) {
+      filtersString = Object.keys(data)
+        .map((key) => {
+          const { filter, value } = data?.[key];
+          return `${key}=${filter}.${value}`;
+        })
+        .join('&');
+    }
+    return filtersString;
+  }
+
+  private buildSelectString(colums?: string, filter: boolean = false): string {
+    const amp = filter ? '&' : '';
+    return colums ? amp + 'select=' + colums : '';
   }
 }

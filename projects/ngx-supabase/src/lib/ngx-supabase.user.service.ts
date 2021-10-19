@@ -43,13 +43,21 @@ export class NgxSupabaseUserService {
     );
   }
 
-  logOut() {
+  logOut(): Observable<Error | null> {
     const url = this.authEndpoints.logout;
-    return this.http.post<{
-      data: User | null;
-      user: User | null;
-      error: Error | null;
-    }>(url, {});
+    return this.http
+      .post<{
+        data: User | null;
+        user: User | null;
+        error: Error | null;
+      }>(url, {})
+      .pipe(
+        map((data) => {
+          localStorage.removeItem('access_token');
+          this.currentUser = null;
+          return data.error;
+        })
+      );
   }
 
   update(
