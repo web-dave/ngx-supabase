@@ -46,31 +46,22 @@ constructor(private supabase: NgxSupabaseService) {
 
 - # user
   `this.supabase.user`
-  SignUp /Register
 
 ```ts
 signUp(value: UserCredentials): Observable<NgxAuthResponse>
 ```
 
-SignIn
-
 ```ts
 signIn(value: UserCredentials): Observable<NgxAuthResponse>
 ```
-
-get the current logged in user
 
 ```ts
 user(): User | null
 ```
 
-Logout
-
 ```ts
  logOut(): Observable<Error | null>
 ```
-
-update Userdetails
 
 ```ts
  update(
@@ -79,8 +70,7 @@ update Userdetails
 ```
 
 - # rest
-
-get data from table
+  `this.supabase.rest`
 
 ```ts
 selectFrom(
@@ -89,8 +79,26 @@ selectFrom(
   ): Observable<NgxSupaBaseSuccessResponse[]>
 ```
 
-get collum names from table
-
 ```ts
 getCollumsFrom(tbl: string): Observable<string[]>
+```
+
+```ts
+insertInto(
+    tbl: string,
+    data: { [key: string]: any }[],
+    upsert = false
+  ): Observable<NgxSupaBaseSuccessResponse[]>
+```
+
+```ts
+updateIn(
+    tbl: string,
+    data: { [key: string]: any },
+    params: SelectFromParams
+  ): Observable<NgxSupaBaseSuccessResponse[]>
+```
+
+```ts
+deleteFrom(tbl: string, params: SelectFromParams)
 ```

@@ -37,7 +37,35 @@ export class NgxSupabaseRestService {
     );
   }
 
-  insertInto() {}
+  insertInto(
+    tbl: string,
+    data: { [key: string]: any }[],
+    upsert = false
+  ): Observable<NgxSupaBaseSuccessResponse[]> {
+    const url = this.restUrl + tbl;
+    const headers: { Prefer?: string } = {};
+    if (upsert) {
+      headers.Prefer = 'resolution=merge-duplicates';
+    }
+
+    return this.http.post<NgxSupaBaseSuccessResponse[]>(url, data, { headers });
+  }
+
+  updateIn(
+    tbl: string,
+    data: { [key: string]: any },
+    params: SelectFromParams
+  ): Observable<NgxSupaBaseSuccessResponse[]> {
+    const url = this.restUrl + tbl + this.buildFilterstring(params?.filter);
+    return this.http.patch<NgxSupaBaseSuccessResponse[]>(url, data, {
+      headers: { Prefer: 'return=representation' },
+    });
+  }
+
+  deleteFrom(tbl: string, params: SelectFromParams) {
+    const url = this.restUrl + tbl + this.buildFilterstring(params?.filter);
+    return this.http.delete<any>(url);
+  }
 
   private buildFilterstring(data: SelectFromFilter = {}): string {
     let filtersString = '';
