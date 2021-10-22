@@ -12,20 +12,14 @@ npm i ngx-supabase
 
 ### add it to your module
 
-you need a `env.ts` file with your supabase creds
-
 ```ts
+import { NgxSupabaseModule } from 'ngx-supabase';
 import { NgxSupabaseConfig } from "ngx-supabase";
 
 export const config: NgxSupabaseConfig = {
   supabaseUrl: "",
   supabaseKey: "",
 };
-```
-
-```ts
-import { NgxSupabaseModule } from 'ngx-supabase';
-import { config } from '../env';
 
 @NgModule({
   imports: [
@@ -39,36 +33,72 @@ export class YourModule {}
 
 and you are ready to go.
 
-### API
-
-#### SIGNUP
+NgxSupabaseService is now available via DI
 
 ```ts
-signUp(value: UserCredentials): Observable<{
-    user: User | null;
-    session: Session | null;
-    error: Error | null;
-    data: User | Session | null;
-  }>
+constructor(private supabase: NgxSupabaseService) {
+  // this.supabase.user
+  // this.supabase.rest
+}
 ```
 
-#### GET DATA FROM TABLE
+### API
+
+- # user
+  `this.supabase.user`
+
+```ts
+signUp(value: UserCredentials): Observable<NgxAuthResponse>
+```
+
+```ts
+signIn(value: UserCredentials): Observable<NgxAuthResponse>
+```
+
+```ts
+user(): User | null
+```
+
+```ts
+ logOut(): Observable<Error | null>
+```
+
+```ts
+ update(
+    attributes: UserAttributes
+  ): Observable<{ data: User | null; user: User | null; error: Error | null }>
+```
+
+- # rest
+  `this.supabase.rest`
 
 ```ts
 selectFrom(
     tbl: string,
-    columns?: string | undefined,
-    options?:
-      | {
-          head?: boolean | undefined;
-          count?: 'exact' | 'planned' | 'estimated' | null | undefined;
-        }
-      | undefined
-  ): Observable<PostgrestResponse<{ [key: string]: any }>>
+    params?: SelectFromParams
+  ): Observable<NgxSupaBaseSuccessResponse[]>
 ```
-
-#### GET COLLUM NAMES FROM TABLE
 
 ```ts
 getCollumsFrom(tbl: string): Observable<string[]>
+```
+
+```ts
+insertInto(
+    tbl: string,
+    data: { [key: string]: any }[],
+    upsert = false
+  ): Observable<NgxSupaBaseSuccessResponse[]>
+```
+
+```ts
+updateIn(
+    tbl: string,
+    data: { [key: string]: any },
+    params: SelectFromParams
+  ): Observable<NgxSupaBaseSuccessResponse[]>
+```
+
+```ts
+deleteFrom(tbl: string, params: SelectFromParams)
 ```
